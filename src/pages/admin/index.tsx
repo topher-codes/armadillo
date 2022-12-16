@@ -20,9 +20,8 @@ const Index: NextPage = ({ data }) => {
     (salesPerson.status === selectedStatus || selectedStatus === "all") &&
     (selectedNames.includes(salesPerson.name) || selectedNames.length === 0);
   return (
-    <div className="flex flex-col text-center">
-      <h1 className="text-3xl">Admin</h1>
-      <p className="text-xl">This is the admin page</p>
+    <div className="  align-center flex min-h-screen min-w-full flex-col justify-center border text-center">
+      <h1 className="text-3xl">Dashboard</h1>
       {useSession().data?.user && (
         <Card>
           <Table marginTop="mt-6">
@@ -74,34 +73,25 @@ const Index: NextPage = ({ data }) => {
           </Table>
         </Card>
       )}
-
       {!useSession().data?.user ? (
-        <button
-          className="rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
-          onClick={() => signIn()}
-        >
-          Sign in
-        </button>
+        <p>
+          <button
+            className="w-40 rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
+            onClick={() => signIn()}
+          >
+            Sign in
+          </button>
+        </p>
       ) : (
-        <button
-          className="rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
-          onClick={() => signOut()}
-        >
-          Sign out
-        </button>
+        <p>
+          <button
+            className="w-40 rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
+            onClick={() => signOut()}
+          >
+            Sign out
+          </button>
+        </p>
       )}
-
-      <div className="flex flex-col">
-        <div className="flex flex-row">
-          <div className="flex flex-col">
-            <p className="text-xl">User</p>
-            <p className="text-xl">Email</p>
-
-            <p className="text-xl">Name</p>
-            <p className="text-xl">Image</p>
-          </div>
-        </div>
-      </div>
     </div>
   );
 };
