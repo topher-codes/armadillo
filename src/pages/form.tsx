@@ -55,13 +55,7 @@ const Home: NextPage = () => {
             required
           />
           <label htmlFor="details">Detailed Description</label>
-          <input
-            className="border"
-            type="text"
-            name="details"
-            id="details"
-            required
-          />
+          <textarea className="border" name="details" id="details" required />
           <button
             className="rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
             type="submit"

@@ -2,6 +2,7 @@ import { type AppType } from "next/app";
 import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import "@tremor/react/dist/esm/tremor.css";
+import Nav from "../components/Nav";
 
 import { trpc } from "../utils/trpc";
 
@@ -13,6 +14,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
 }) => {
   return (
     <SessionProvider session={session}>
+      <Nav />
       <Component {...pageProps} />
     </SessionProvider>
   );

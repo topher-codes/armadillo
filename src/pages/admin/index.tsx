@@ -1,96 +1,53 @@
 import type { NextPage } from "next";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { useState } from "react";
-import type { DeltaType } from "@tremor/react";
-import {
-  Card,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeaderCell,
-  TableRow,
-} from "@tremor/react";
 
-const Index: NextPage = ({ data }) => {
-  const [selectedStatus, setSelectedStatus] = useState("all");
-  const [selectedNames, setSelectedNames] = useState<string[]>([]);
-
-  const isSalesPersonSelected = (salesPerson) =>
-    (salesPerson.status === selectedStatus || selectedStatus === "all") &&
-    (selectedNames.includes(salesPerson.name) || selectedNames.length === 0);
+const Index: NextPage = ({ data }: any) => {
   return (
-    <div className="  align-center flex min-h-screen min-w-full flex-col justify-center border text-center">
-      <h1 className="text-3xl">Dashboard</h1>
+    <div className="container mx-auto border px-4 ">
+      <h1 className="text-2xl">Admin Page</h1>
+      <p>Here is the data from the database:</p>
+      <br />
       {useSession().data?.user && (
-        <Card>
-          <Table marginTop="mt-6">
-            <TableHead>
-              <TableRow>
-                <TableHeaderCell>Name</TableHeaderCell>
-                <TableHeaderCell textAlignment="text-right">
-                  Issue
-                </TableHeaderCell>
-                <TableHeaderCell textAlignment="text-right">
-                  Details
-                </TableHeaderCell>
-                <TableHeaderCell textAlignment="text-right">
-                  Status
-                </TableHeaderCell>
-                <TableHeaderCell textAlignment="text-right">
-                  Created At
-                </TableHeaderCell>
-                <TableHeaderCell textAlignment="text-right">
-                  Updated At
-                </TableHeaderCell>
-              </TableRow>
-            </TableHead>
-
-            <TableBody>
-              {data
-                .filter((data) => isSalesPersonSelected(data))
-                .map((item) => (
-                  <TableRow key={item.name}>
-                    <TableCell>{item.name}</TableCell>
-                    <TableCell textAlignment="text-right">
-                      {item.issue}
-                    </TableCell>
-                    <TableCell textAlignment="text-right">
-                      {item.details}
-                    </TableCell>
-                    <TableCell textAlignment="text-right">
-                      {item.status}
-                    </TableCell>
-                    <TableCell textAlignment="text-right">
-                      {new Date(item.createdAt).toLocaleDateString()}
-                    </TableCell>
-                    <TableCell textAlignment="text-right">
-                      {item.updatedAt}
-                    </TableCell>
-                  </TableRow>
-                ))}
-            </TableBody>
-          </Table>
-        </Card>
+        <ul>
+          {data.map((submission: any) => (
+            <li key={submission.id} className="mx-auto border py-4">
+              <p>
+                <strong>Name:</strong> {submission.name}
+              </p>
+              <p>
+                <strong>Email:</strong> {submission.email}
+              </p>
+              <p>
+                <strong>Issue:</strong> {submission.issue}
+              </p>
+              <p>
+                <strong>Detailed Description:</strong> {submission.details}
+              </p>
+              <p>
+                <strong>Date Created:</strong>{" "}
+                {new Date(submission.createdAt).toLocaleDateString()}
+              </p>
+            </li>
+          ))}
+        </ul>
       )}
       {!useSession().data?.user ? (
-        <p>
+        <div>
+          <p>You must be signed in to view this page.</p>
           <button
-            className="w-40 rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
+            className="rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
             onClick={() => signIn()}
           >
-            Sign in
+            Sign In
           </button>
-        </p>
+        </div>
       ) : (
-        <p>
-          <button
-            className="w-40 rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
-            onClick={() => signOut()}
-          >
-            Sign out
-          </button>
-        </p>
+        <button
+          className="rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
+          onClick={() => signOut()}
+        >
+          Sign Out
+        </button>
       )}
     </div>
   );
